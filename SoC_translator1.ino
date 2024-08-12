@@ -4,12 +4,13 @@ const int pwmPin = 11;          // PWM output pin (OC2A, controlled by Timer2)
 
 const float R1 = 10000.0;       // 10kΩ for input voltage divider
 const float R2 = 2000.0;        // 2kΩ for input voltage divider
-const float R3 = 10000.0;       // 10kΩ for output voltage divider
-const float R4 = 2000.0;        // 2kΩ for output voltage divider
+const float R3 = 1000.0;       // 1kΩ for output voltage divider
+const float R4 = 10000.0;        // 10kΩ for output voltage divider
 
 // Lookup table for car battery voltage and corresponding Li-Ion voltage
-const float carBatteryVoltages[] = {11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 14.4};
-const float liIonVoltages[] = {3.0, 3.3, 3.6, 3.8, 4.0, 4.1, 4.2, 4.2};
+//const float carBatteryVoltages[] = {11.0, 11.5, 12.0, 12.5, 13.0, 13.5, 14.0, 14.4};
+  const float carBatteryVoltages[] = {12.0, 12.1, 12.4, 12.5, 12.8, 12.9, 14.0, 14.4};
+       const float liIonVoltages[] = {3.0,  3.05, 3.2,  3.8,  4.0,  4.1,  4.2,  4.2};
 const int numPoints = sizeof(carBatteryVoltages) / sizeof(carBatteryVoltages[0]);
 
 // PID control variables
