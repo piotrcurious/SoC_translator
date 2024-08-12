@@ -42,14 +42,14 @@ Certainly! Here's the corrected ASCII art for the circuit where the NPN transist
                |         |
              Collector   Emitter
                |         |
-              +5V        |
+              +5V        [R2]
                          |
                        Feedback
                         (FB)
-                         |
-                        [R2] 10kΩ
-                         |
-                        GND
+                         
+                        
+                         
+                        
 
                +12V Car Battery
                   |
@@ -83,14 +83,15 @@ Certainly! Here's the corrected ASCII art for the circuit where the NPN transist
 - **Base Resistor ([R1]):**
   - Limits the current flowing into the base of the NPN transistor.
 
-- **Feedback Resistor ([R2]):**
-  - Pulls the feedback pin up to ground, stabilizing the LM2596’s feedback loop.
+- **Feedback current limit Resistor ([R2]):**
+  - limits current from emitter follower .
 
 - **Voltage Divider ([R3]):**
   - Used to measure the car battery voltage (for reference purposes).
 
 - **LM2596 Buck Converter:**
   - The feedback pin is controlled by the emitter of the NPN transistor, modulating the output voltage based on the PWM signal.
+  - We assume lm2596 is already installed on DC-DC board with feedback trimpot configured for 4.25V
 
 This schematic visualizes how the transistor is used to control the feedback voltage with inverted PWM logic, thereby modulating the output voltage of the LM2596.
 ### **Component Explanation:**
@@ -101,10 +102,10 @@ This schematic visualizes how the transistor is used to control the feedback vol
    - **Emitter**: Connected to the feedback pin (FB) of the LM2596.
 
 2. **Base Resistor ([R1]):**
-   - Limits the current flowing into the base of the NPN transistor. A typical value like 10kΩ ensures proper operation without excessive current.
+   - Limits the current flowing into the base of the NPN transistor. A typical value like 1kΩ ensures proper operation without excessive current.
 
 3. **Feedback Resistor ([R2]):**
-   - Ensures proper biasing of the feedback pin, stabilizing the LM2596’s feedback network.
+   - limits current flowing into feedback pin network. 100ohm to 330ohm should work .
 
 4. **Resistor ([R3]):**
    - Used in the car battery voltage divider, not directly related to PWM control.
@@ -112,8 +113,8 @@ This schematic visualizes how the transistor is used to control the feedback vol
 ### **Operation:**
 
 - **PWM Signal Handling:**
-  - When the PWM signal from the Arduino is high, the transistor is in saturation mode, pulling the emitter (and hence the feedback pin) close to ground. This reduces the feedback voltage, which typically results in a reduced output voltage of the LM2596.
-  - When the PWM signal is low, the transistor is off, and the emitter is pulled up to +5V (through the collector connected to +5V). This increases the feedback voltage, which typically results in an increased output voltage of the LM2596.
+  - When the PWM signal from the Arduino is high, the transistor base is at 5V. Emitter follower outputs 5V which pulls FB pin above 1.23V required to disable lm2596 output. 
+  - When the PWM signal is low, the transistor is off. lm2596 adjusts voltage. 
 
 ### **Code Adjustments**
 
